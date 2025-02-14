@@ -1,0 +1,72 @@
+---
+- hosts: webservers
+  gather_facts: false
+  vars: #P3P5P12P14P16...........P18
+    message: " ECHO Message from Play Vars [P7]"
+  vars_files:
+    - vars_file.yml
+  vars_prompt:
+    - name: prompted_message
+      prompt: "Enter a message [P9]"
+      private: no
+  roles:
+    - role: example_role
+      vars:
+        message: " ECHO Message from Role Parameters [P15]" # Role Parameters
+  tasks:
+    - name: Print Message - Task Vars
+      debug:
+        msg: "Final Message (Task Vars) [P11]: {{ message }}"
+      vars:
+        message: " ECHO Message from Task Vars [P11]" # Task Vars
+
+    - name: Print Message - Block Vars
+      block:
+        - debug:
+            msg: "Block Message (Block Vars) [P10]: {{ message }}"
+          vars:
+            message: " ECHO Message from Block Vars [P10]" # Block Vars
+        - debug:
+            msg: "Message After Set Fact [P13 Overwrite Block P10]: {{ message }}" # Demonstrating Set Fact Overwrite
+      vars:
+        message: " ECHO Message Block Level Before Set Fact [P10 - Will be Overwritten]" # Block level variable
+
+    - name: Set Fact
+      set_fact:
+        message: " ECHO Message from Set Fact [P13]"
+
+    - name: Print Message - Vars Prompt
+      debug:
+        msg: "Prompted Message (Vars Prompt) [P9]: {{ prompted_message }}"
+
+    - name: Print Message - Vars File
+      debug:
+        msg: "Vars File Message (Vars File) [P8]: {{ message }}"
+
+    - name: Print Message - Role Default
+      debug:
+        msg: "Role Default Message [P1]: {{ message }}" # Will be Overwritten by Higher Precedence in Play
+
+    - name: Print Message - Role Vars
+      debug:
+        msg: "Role Vars Message [P6]: {{ message }}" # Will be Overwritten by Higher Precedence in Play
+
+    - name: Print Message - Group var
+      debug:
+        msg: "Group Var Message [P2]: {{ message }}" # Will be Overwritten by Higher Precedence in Play
+
+    - name: Print Message - Host Var
+      debug:
+        msg: "Host Var Message [P4]: {{ message }}" # Will be Overwritten by Higher Precedence in Play
+
+    - name: Print Message - Play Var
+      debug:
+        msg: "Play Var Message [P7]: {{ message }}" # Play Var Level
+
+    - name: Print Message - Role Parameter
+      debug:
+        msg: "Role Parameter Message [P15]: {{ message }}" # Role Parameter Level - Overrides lower role vars and defaults
+
+    - name: Final Message - Showing Highest Play Precedence - Role Parameter
+      debug:
+        msg: "Final Message (Highest Play Precedence - Role Parameter) [P15 visible]: {{ message }}" # Highest Precedence in this Play - Role Parameter

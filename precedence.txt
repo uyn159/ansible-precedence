@@ -1,0 +1,28 @@
+Lower Precedence
+[P1] Role Defaults (role/defaults/main.yml): Variables in defaults/main.yml within a role.
+[P2] Inventory group_vars/all: Variables in group_vars/all.
+[P3] Inventory group_vars/* (Group-Specific): Variables in group_vars/<group_name>.
+[P4] Inventory host_vars/*: Variables in host_vars/<hostname>.
+
+Medium Precedence
+
+[P5] Host Facts (and Cached Facts): Facts gathered from managed hosts.
+[P6] Role Variables (role/vars/main.yml): Variables in vars/main.yml within a role.
+[P7] Play Variables (play vars: section in playbook): Variables in the vars: section of a playbook.
+[P8] Play vars_files: Variables loaded using vars_files: in a playbook.
+[P9] Play vars_prompt: Variables obtained using vars_prompt:.
+
+Higher Precedence
+
+[P10] Block Variables (block: vars: within a block): Variables in a vars: section inside a block.
+[P11] Task Variables (vars: in a task): Variables in vars: directly within a task.
+[P12] include_vars Tasks: Variables loaded using include_vars in a task.
+[P13] set_fact Variables: Variables set using set_fact.
+[P14] Registered Variables (from register:): Variables registered using register:.
+[P15] Role Parameters (passed to include_role or applied roles): Parameters passed to include_role or applied roles.
+[P16] Include Parameters (passed to include: task): Parameters passed to include: task.
+
+Highest Precedence (Ultimate Overrides)
+
+[P17] Extra Variables (-e or --extra-vars command-line): Variables passed via -e or --extra-vars.
+[P18] Vault Password Variables: Vault password variables (for decryption). (Not explicitly tested in example but mentioned for completeness)

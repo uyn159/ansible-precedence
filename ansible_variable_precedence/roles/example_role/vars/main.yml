@@ -1,0 +1,2 @@
+message: " ECHO Message from Role Vars [P6]"
+role_vars_var: "Role Vars Var - Not Overridden Directly" # Just for illustration

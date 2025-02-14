@@ -1,0 +1,2 @@
+message: " ECHO Message from Role Defaults [P1]"
+role_default_var: "Role Default Var - Not Overridden Directly" # Just for illustration

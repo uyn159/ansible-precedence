@@ -1,0 +1,2 @@
+vars_file_message: " ECHO Message from vars_file.yml [P8]"
+message: " ECHO Message from Vars File [P8]" # Overriding again for example
